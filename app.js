@@ -1,69 +1,77 @@
-// VARIABLES
 let amigos = [];
 let amigosSorteados = [];
 
-//Titulos y texto 
-function asignarTextoElemento(selector, texto){
-    const elemento = document.querySelector(selector);
-    elemento.innerHTML = texto;
-    return;
+function asignarTextoElemento(selector, texto) {
+  const elemento = document.querySelector(selector);
+  elemento.innerHTML = texto;
+  return;
 }
 
-//Limpiar caja de texto 
+// Limpia el campo de texto
 function limpiarCaja() {
-    document.getElementById('amigo').value = '';
+  document.getElementById('amigo').value = '';
 }
- 
-//Agregar amigos
+
+// Función para agregar amigo
 function agregarAmigo() {
-    let nombre = document.getElementById('amigo').value.trim();
-    if (nombre === '') {
-        alert('Por favor ingresa un nombre');
-        return;
-    }
-    amigos.push(nombre);
-    amigosSorteados = [];
-    mostrarLista();
-    limpiarCaja();
+  let nombre = document.getElementById('amigo').value.trim();
+
+  if (nombre === '') {
+    alert('Por favor ingresa un nombre.');
+    return;
+  }
+
+  amigos.push(nombre);
+  amigosSorteados = []; // Reinicia los amigos sorteados al agregar uno nuevo
+  mostrarLista();
+  limpiarCaja();
 }
- //Lista de amigos
- function mostrarLista() {
-    let listaAmigos = '';
-    for (let i = 0; i<amigos.length; i++) {
-        listaAmigos += `${amigos[i]}`;
-    }
-    asignarTextoElemento('#listaAmigos', listaAmigos);
- }
 
- //Sortear amigo secreto
- function sortearAmigo() {
-    if (amigos.length === 0) {
-        alert('No hay amigos para sortear =(, agrega algunos nombres');
-        return;
-    }
-//si ya se sortearon todos los amigos reiniciamos 
-    if  (amigosSorteados.length === amigos.length){
-        alert('Todos los amigos tienen nuevos amigos secretos, comenzaremos de nuevo =)');
-        reiniciarSorteo();
-        return;
-    }
+// Función para mostrar la lista de amigos en pantalla
+function mostrarLista() {
+  let listaHTML = '';
 
-    //Sortear a los amigos que no se han sorteado
-    let amigosNoSorteados = amigos.filter(amigo => !amigosSorteados.includes(amigo));
+  for (let i = 0; i < amigos.length; i++) {
+    listaHTML += `<li>${amigos[i]}</li>`;
+  }
 
-    //Sorteo
-    let amigosAleatorios = Math.floor(Math.random()*amigosNoSorteados.length);
-    let amigoSecreto = amigosNoSorteados[amigosAleatorios];
-    amigosSorteados.push(amigoSecreto);
-    asignarTextoElemento('#resultado', `Tú amigo secreto es: ¡${amigoSecreto}!`);
- }
-// Función para reiniciar todo
+  asignarTextoElemento('#listaAmigos', listaHTML);
+}
+
+// Función para sortear amigo secreto
+function sortearAmigo() {
+  if (amigos.length === 0) {
+    alert('No hay amigos para sortear =(. Agrega primero algunos nombres.');
+    return;
+  }
+
+  // Si ya se sortearon todos los amigos, reinicia TODO (como un f5)
+  if (amigosSorteados.length === amigos.length) {
+    alert('Todos los amigos han sido sorteados. ¡Reiniciando el soreto =)!');
+    reiniciarSistema(); // Llama a la función que borra todo
+    return; // Termina la función para no seguir sorteando
+  }
+
+  // Filtra los amigos que no han sido sorteados
+  let amigosDisponibles = amigos.filter(amigo => !amigosSorteados.includes(amigo));
+  
+  // Selecciona un amigo aleatorio de los disponibles
+  let indiceAleatorio = Math.floor(Math.random() * amigosDisponibles.length);
+  let amigoSecreto = amigosDisponibles[indiceAleatorio];
+  
+  // Agrega el amigo a la lista de sorteados
+  amigosSorteados.push(amigoSecreto);
+
+  asignarTextoElemento('#resultado', `Tú amigo secreto es: ¡${amigoSecreto}!`);
+}
+
+// Función para reiniciar TODO (como un F5)
 function reiniciarSistema() {
-  amigos = []; 
-  amigosSorteados = []; 
-  mostrarLista(); 
-  asignarTextoElemento('#resultado', ''); 
-  limpiarCaja(); 
+  amigos = []; // Vacía la lista de amigos
+  amigosSorteados = []; // Vacía la lista de sorteados
+  mostrarLista(); // Actualiza la lista en pantalla 
+  asignarTextoElemento('#resultado', ''); // Limpia el resultado del sorteo
+  limpiarCaja(); // Limpia todo el texto
 }
 
 // TITULO Y TEXTO

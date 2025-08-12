@@ -1,18 +1,20 @@
+//VARIABLES
 let amigos = [];
 let amigosSorteados = [];
 
+//Titulos y texto
 function asignarTextoElemento(selector, texto) {
   const elemento = document.querySelector(selector);
   elemento.innerHTML = texto;
   return;
 }
 
-// Limpia el campo de texto
+//Limpiar caja de texto
 function limpiarCaja() {
   document.getElementById('amigo').value = '';
 }
 
-// Función para agregar amigo
+//Agregar amigos
 function agregarAmigo() {
   let nombre = document.getElementById('amigo').value.trim();
 
@@ -22,12 +24,12 @@ function agregarAmigo() {
   }
 
   amigos.push(nombre);
-  amigosSorteados = []; // Reinicia los amigos sorteados al agregar uno nuevo
+  amigosSorteados = []; 
   mostrarLista();
   limpiarCaja();
 }
 
-// Función para mostrar la lista de amigos en pantalla
+//Lista de amigos
 function mostrarLista() {
   let listaHTML = '';
 
@@ -38,42 +40,40 @@ function mostrarLista() {
   asignarTextoElemento('#listaAmigos', listaHTML);
 }
 
-// Función para sortear amigo secreto
+//Sortear amigo secreto
 function sortearAmigo() {
   if (amigos.length === 0) {
     alert('No hay amigos para sortear =(. Agrega primero algunos nombres.');
     return;
   }
 
-  // Si ya se sortearon todos los amigos, reinicia TODO (como un f5)
+  //si ya se sortearon todos los amigos reiniciamos
   if (amigosSorteados.length === amigos.length) {
     alert('Todos los amigos han sido sorteados. ¡Reiniciando el soreto =)!');
-    reiniciarSistema(); // Llama a la función que borra todo
-    return; // Termina la función para no seguir sorteando
+    reiniciarSistema(); 
+    return; 
   }
 
-  // Filtra los amigos que no han sido sorteados
+  //Sortear a los amigos que no se han sorteado
   let amigosDisponibles = amigos.filter(amigo => !amigosSorteados.includes(amigo));
   
-  // Selecciona un amigo aleatorio de los disponibles
+  //Sorteo
   let indiceAleatorio = Math.floor(Math.random() * amigosDisponibles.length);
   let amigoSecreto = amigosDisponibles[indiceAleatorio];
-  
-  // Agrega el amigo a la lista de sorteados
   amigosSorteados.push(amigoSecreto);
 
   asignarTextoElemento('#resultado', `Tú amigo secreto es: ¡${amigoSecreto}!`);
 }
 
-// Función para reiniciar TODO (como un F5)
 function reiniciarSistema() {
-  amigos = []; // Vacía la lista de amigos
-  amigosSorteados = []; // Vacía la lista de sorteados
-  mostrarLista(); // Actualiza la lista en pantalla 
-  asignarTextoElemento('#resultado', ''); // Limpia el resultado del sorteo
-  limpiarCaja(); // Limpia todo el texto
+  amigos = []; 
+  amigosSorteados = []; 
+  mostrarLista(); 
+  asignarTextoElemento('#resultado', ''); 
+  limpiarCaja(); 
 }
 
 // TITULO Y TEXTO
 asignarTextoElemento('h1', 'INTERCAMBIO NAVIDEÑO 2025');
 asignarTextoElemento('h2', '¡ESCRIBE EL NOMBRE DE TUS AMIGOS!');
+

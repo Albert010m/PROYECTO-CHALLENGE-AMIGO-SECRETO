@@ -41,4 +41,19 @@ function agregarAmigo() {
         alert('No hay amigos para sortear =(, agrega algunos nombres');
         return;
     }
+//si ya se sortearon todos los amigos reiniciamos 
+    if  (amigosSorteados.length === amigos.length){
+        alert('Todos los amigos tienen nuevos amigos secretos, comenzaremos de nuevo =)');
+        reiniciarSorteo();
+        return;
+    }
+
+    //Sortear a los amigos que no se han sorteado
+    let amigosNoSorteados = amigos.filter(amigo => !amigosSorteados.includes(amigo));
+
+    //Sorteo
+    let amigosAleatorios = Math.floor(Math.random()*amigosNoSorteados.length);
+    let amigoSecreto = amigosNoSorteados[amigosAleatorios];
+    amigosSorteados.push(amigoSecreto);
+    asignarTextoElemento('#resultado', `Tú amigo secreto es: ¡${amigoSecreto}!`);
  }

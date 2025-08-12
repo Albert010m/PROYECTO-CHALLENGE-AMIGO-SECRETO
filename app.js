@@ -57,3 +57,15 @@ function agregarAmigo() {
     amigosSorteados.push(amigoSecreto);
     asignarTextoElemento('#resultado', `Tú amigo secreto es: ¡${amigoSecreto}!`);
  }
+// Función para reiniciar todo
+function reiniciarSistema() {
+  amigos = []; 
+  amigosSorteados = []; 
+  mostrarLista(); 
+  asignarTextoElemento('#resultado', ''); 
+  limpiarCaja(); 
+}
+
+// TITULO Y TEXTO
+asignarTextoElemento('h1', 'INTERCAMBIO NAVIDEÑO 2025');
+asignarTextoElemento('h2', '¡ESCRIBE EL NOMBRE DE TUS AMIGOS!');
